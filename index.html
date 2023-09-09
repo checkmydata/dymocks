@@ -1,0 +1,79 @@
+
+<h2>Dymocks breach data checker</h2>
+
+<p>This page requires javascript. No request is sent to the back end. Your fan may spin a bit when you run the check.</p>
+
+<p id=loading><i>Loading data...</i></p>
+
+<p>Your data will only be on this page IF your post code (therefore most likely, postal address) was included in the 1.2M data set</p>
+
+<p>There are 180,208 hashed combinations of email and postcode</p>
+<p>There are 249,799 hashed combinations of phone number and postcode</p>
+
+<h3>Enter your email:</h3>
+<input id=emailinput placeholder="jane.doe@example.com">
+<button id=emailcheckbutton>Run email check</button>
+
+<h3>Enter your phone number:</h3>
+<input id=phoneinput placeholder="0400123123">
+<button id=phonecheckbutton>Run phone check</button>
+
+<div id=results style="color:red"></div>
+
+<p>Any hacker advanced enough to crack the data on this page to view your limited information (email, phone or post code) probably already has a copy of the leaked data circulating around the internet</p>
+
+<p>Only your most RECENT post code is shown, as per sequential order of the database. Your post code history is not included in the dataset</p>
+
+<script src="https://unpkg.com/crypto-js@4.1.1/crypto-js.js"></script>
+
+<script src="data.js"></script>
+
+<script type="text/javascript">
+
+
+document.getElementById('emailcheckbutton').addEventListener("click", function(e) {
+    const email = document.getElementById('emailinput').value;
+    const emailHash = CryptoJS.MD5(email).toString();
+    console.log(emailHash);
+
+    const comboHash = emailPostcodeMap.get(emailHash);
+	console.log('comboHash: ' + comboHash);
+
+	var t0 = performance.now();
+    for (var i = 0; i < 10000; i++) {
+    	istr = String(i).padStart(4, '0'); // pad to 4 digit string
+		if (CryptoJS.MD5(email+istr).toString() == comboHash) {
+			console.log("found:", istr);
+			document.getElementById("results").innerHTML += "<br>Found postcode " + istr + " from email: " + email + "<br>";
+			var t1 = performance.now();
+			document.getElementById("results").innerHTML += "<p style='color:green'>Took " + (t1 - t0) + " milliseconds." + "</p>";
+			break
+		}
+	}
+	
+
+
+});
+
+document.getElementById('phonecheckbutton').addEventListener("click", function(e) {
+    const phone = document.getElementById('phoneinput').value;
+    const phoneHash = CryptoJS.MD5(phone).toString();
+    console.log(phoneHash);
+
+    const comboHash = phonePostcodeMap.get(phoneHash);
+	console.log('comboHash: ' + comboHash);
+
+	var t0 = performance.now();
+    for (var i = 0; i < 10000; i++) {
+    	istr = String(i).padStart(4, '0'); // pad to 4 digit string
+		if (CryptoJS.MD5(phone+istr).toString() == comboHash) {
+			console.log("found:", istr);
+			document.getElementById("results").innerHTML += "<br>Found postcode " + istr + " from phone: " + phone + "<br>";
+			var t1 = performance.now();
+			document.getElementById("results").innerHTML += "<p style='color:green'>Took " + (t1 - t0) + " milliseconds." + "</p>";
+			break
+		}
+	}
+});
+
+</script>
