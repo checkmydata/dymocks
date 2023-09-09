@@ -2,13 +2,17 @@
 <h2>Dymocks breach data checker</h2>
 
 <p>This page requires javascript. No request is sent to the back end. Your fan may spin a bit when you run the check.</p>
-<b>Might not work on mobile due to JS issues.</b>
+<!-- <b>Might not work on mobile due to JS issues.</b> -->
 <p id=loading><i>Loading data...</i></p>
 
 <p>Your data will only be on this page IF your post code (therefore most likely, postal address) was included in the 1.2M data set</p>
 
-<p>There are 180,208 hashed combinations of email and postcode</p>
-<p>There are 249,799 hashed combinations of phone number and postcode</p>
+<p>CSV header of the original leaked data (everything in plain text):</p>
+
+<code>customer_id_,first_name,last_name,FullName,gender,email_address_,mobile_country_,mobile_number_,dob,postal_street_1_,postal_street_2_,state_,postal_code_,city_,gold_expiry_date,AccountStatus,account_status,member_created_date,card_ranking</code>
+
+<p>There are 180,208 hashed combinations of email and postcode on this site (in the leaked data, they are in plain text);</p>
+<p>There are 249,799 hashed combinations of phone number and postcode on this site (in the leaked data, they are in plain text)</p>
 
 <h3>Enter your email:</h3>
 <input id=emailinput placeholder="jane.doe@example.com">
