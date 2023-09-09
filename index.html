@@ -38,7 +38,7 @@ document.getElementById('emailcheckbutton').addEventListener("click", function(e
 
     const comboHash = emailPostcodeMap.get(emailHash);
 	console.log('comboHash: ' + comboHash);
-
+	var found = false;
 	var t0 = performance.now();
     for (var i = 0; i < 10000; i++) {
     	istr = String(i).padStart(4, '0'); // pad to 4 digit string
@@ -47,8 +47,13 @@ document.getElementById('emailcheckbutton').addEventListener("click", function(e
 			document.getElementById("results").innerHTML += "<br>Found postcode " + istr + " from email: " + email + "<br>";
 			var t1 = performance.now();
 			document.getElementById("results").innerHTML += "<p style='color:green'>Took " + (t1 - t0) + " milliseconds." + "</p>";
+			found = true;
 			break
 		}
+	}
+
+	if (!found) {
+		document.getElementById("results").innerHTML += "<p style='color:green'>Nothing found from email: " + email + "</p>";
 	}
 	
 
@@ -62,7 +67,7 @@ document.getElementById('phonecheckbutton').addEventListener("click", function(e
 
     const comboHash = phonePostcodeMap.get(phoneHash);
 	console.log('comboHash: ' + comboHash);
-
+	var found = false;
 	var t0 = performance.now();
     for (var i = 0; i < 10000; i++) {
     	istr = String(i).padStart(4, '0'); // pad to 4 digit string
@@ -71,8 +76,12 @@ document.getElementById('phonecheckbutton').addEventListener("click", function(e
 			document.getElementById("results").innerHTML += "<br>Found postcode " + istr + " from phone: " + phone + "<br>";
 			var t1 = performance.now();
 			document.getElementById("results").innerHTML += "<p style='color:green'>Took " + (t1 - t0) + " milliseconds." + "</p>";
+			found = true;
 			break
 		}
+	}
+	if (!found) {
+		document.getElementById("results").innerHTML += "<p style='color:green'>Nothing found from phone: " + phone + "</p>";
 	}
 });
 
